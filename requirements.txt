@@ -1,0 +1,8 @@
+openai==1.55.3
+pydantic==2.10.1
+pydantic_core==2.27.1
+python-dotenv==1.0.1
+pyttsx3==2.98
+PyAudio==0.2.14
+SpeechRecognition==3.13.0
+requests==2.32.3
