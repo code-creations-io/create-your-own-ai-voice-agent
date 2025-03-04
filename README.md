@@ -8,16 +8,16 @@
 - [Setup](#setup)
   - [System](#system)
   - [Installation](#installation)
-  - [Walkthrough](#walkthrough)
-    - [Code Structure](#code-structure)
-    - [Tech stack](#tech-stack)
-    - [Build from scratch](#build-from-scratch)
-      - [1. Create a virtual environment](#1-create-a-virtual-environment)
-      - [2. Activate the virtual environment](#2-activate-the-virtual-environment)
-      - [3. Install the required packages](#3-install-the-required-packages)
-      - [4. Create the AI class](#4-create-the-ai-class)
-      - [5. Create the Conversation class](#5-create-the-conversation-class)
-      - [6. Create the main application](#6-create-the-main-application)
+- [Walkthrough](#walkthrough)
+  - [Code Structure](#code-structure)
+  - [Tech stack](#tech-stack)
+  - [Build from scratch](#build-from-scratch)
+    - [1. Create a virtual environment](#1-create-a-virtual-environment)
+    - [2. Activate the virtual environment](#2-activate-the-virtual-environment)
+    - [3. Install the required packages](#3-install-the-required-packages)
+    - [4. Create the AI class](#4-create-the-ai-class)
+    - [5. Create the Conversation class](#5-create-the-conversation-class)
+    - [6. Create the main application](#6-create-the-main-application)
 
 ## Setup
 
@@ -67,9 +67,9 @@ pip install -r requirements.txt
 python main.py
 ```
 
-### Walkthrough
+## Walkthrough
 
-#### Code Structure
+### Code Structure
 
 The code directory structure is as follows:
 
@@ -97,7 +97,7 @@ The `.gitignore` file specifies the files and directories that should be ignored
 
 The `requirements.txt` file lists the Python packages required by the application.
 
-#### Tech stack
+### Tech stack
 
 **AI**
 
@@ -114,19 +114,19 @@ The `requirements.txt` file lists the Python packages required by the applicatio
 - Typing: `pydantic`
 - Environment variables: `python-dotenv`
 
-#### Build from scratch
+### Build from scratch
 
 This project was built from scratch using Python and the OpenAI API. The AI voice agent can understand and respond to user queries related to shopping. The user can add, remove, update, or clear items in their basket, check the current basket, exit the shopping session, or checkout.
 
 This code was tested using native English, but could be adapted to other languages by changing the AI & Voice models.
 
-##### 1. Create a virtual environment
+#### 1. Create a virtual environment
 
 ```bash
 python -m venv venv
 ```
 
-##### 2. Activate the virtual environment
+#### 2. Activate the virtual environment
 
 ```bash
 # Windows
@@ -135,13 +135,13 @@ python -m venv venv
 source venv/bin/activate
 ```
 
-##### 3. Install the required packages
+#### 3. Install the required packages
 
 ```bash
 pip install -r requirements.txt
 ```
 
-##### 4. Create the AI class
+#### 4. Create the AI class
 
 For this voice agent, we are using the `OpenAI` API to generate responses. You will need to create an account on the OpenAI website and save your API key in the `.env` file at the root of this repository.
 
@@ -278,7 +278,7 @@ You must process the user's query and update the basket based on the query. You 
 
 This completes our `LlmManager` class. We have defined the possible intents, products, and synonyms that the user can interact with. We have also set up the OpenAI client and implemented the `process_user_input` method to handle incoming user queries.
 
-##### 5. Create the Conversation class
+#### 5. Create the Conversation class
 
 Next, we will create the `Conversation` class, which will manage the conversation flow between the user and the AI voice agent.
 
@@ -477,7 +477,7 @@ In the `start` method, we start the continuous listening loop and the speech pro
 
 This completes our `ConversationManager` class. We have set up the speech recognition loop, processed user queries, and responded to the user's input.
 
-##### 6. Create the main application
+#### 6. Create the main application
 
 Finally, we create the `main.py` file, which will be the entry point of our application from the command line.
 
