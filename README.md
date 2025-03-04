@@ -3,6 +3,22 @@
 - Created at: 2025-03-04
 - Created by: `🐢 Arun Godwin Patel @ Code Creations`
 
+## Table of contents
+
+- [Setup](#setup)
+  - [System](#system)
+  - [Installation](#installation)
+  - [Walkthrough](#walkthrough)
+    - [Code Structure](#code-structure)
+    - [Tech stack](#tech-stack)
+    - [Build from scratch](#build-from-scratch)
+      - [1. Create a virtual environment](#1-create-a-virtual-environment)
+      - [2. Activate the virtual environment](#2-activate-the-virtual-environment)
+      - [3. Install the required packages](#3-install-the-required-packages)
+      - [4. Create the AI class](#4-create-the-ai-class)
+      - [5. Create the Conversation class](#5-create-the-conversation-class)
+      - [6. Create the main application](#6-create-the-main-application)
+
 ## Setup
 
 ### System
@@ -85,17 +101,18 @@ The `requirements.txt` file lists the Python packages required by the applicatio
 
 **AI**
 
-- OpenAI API
-- Pydantic
+- LLM: `OpenAI API`
 
 **Voice**
 
-- Text to Speech: pyttsx3
-- Speech to Text: SpeechRecognition & Google Web Speech API
+- Text to Speech: `pyttsx3`
+- Speech to Text: `SpeechRecognition` & `Google Web Speech API`
 
-**App**
+**Others**
 
-- Threading
+- Asynchronous processing: `threading`
+- Typing: `pydantic`
+- Environment variables: `python-dotenv`
 
 #### Build from scratch
 
@@ -165,20 +182,20 @@ class LlmManager:
         "START"
     ]
     PRODUCTS = [
-        "fillet burger",
-        "zinger stacker",
-        "regular fries",
-        "pepsi",
-        "14 piece bucket",
-        "3 piece hot wings"
+        "playstation 5",
+        "nintendo switch",
+        "pokemon plush",
+        "ipad",
+        "xbox",
+        "iphone"
     ]
     SYNONYMS = {
-        "fillet burger": ["burger", "fillet", "philip burger", "Philip burger", "Philip", "philip", "burg", "berg", "philip burg"],
-        "zinger stacker": ["zinger", "stacker", "zynga", "singer", "singer burger", "singer burg"],
-        "regular fries": ["fries", "regular price", "price"],
-        "pepsi": ["drink", "pepsi", "large pepsi", "coke"],
-        "14 piece bucket": ["bucket", "14 piece"],
-        "3 piece hot wings": ["wings", "hot wings", "3 piece"]
+        "playstation 5": ["ps5", "playstation", "ps"],
+        "nintendo switch": ["nintendo", "switch"],
+        "pokemon plush": ["plush", "pokemon"],
+        "ipad": ["apple ipad", "apple tablet"],
+        "xbox": ["microsoft xbox"],
+        "iphone": ["apple iphone"],
     }
 
     def __init__(self):
