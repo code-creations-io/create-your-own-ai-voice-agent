@@ -206,7 +206,6 @@ class LlmManager:
 
         # Global variables
         self.basket = {}
-        self.stop_listening = False
 ```
 
 In the `LlmManager` class, we define the possible intents that the user can have, the products that the user can interact with, and the synonyms for each product.
@@ -344,7 +343,7 @@ def _continuous_listen(self):
                         continue
 
         # Start the listening loop in a background thread
-        threading.Thread(target=_listen_loop, daemon=True).start()
+        threading.Thread(target=listen_loop, daemon=True).start()
 ```
 
 In the `_continuous_listen` method, we set up the speech recognition loop. We calibrate the microphone for ambient noise and continuously listen for user input. When the user speaks, we transcribe the audio and add it to the speech queue to be processed by the LLM.
@@ -407,13 +406,13 @@ def _process_speech(self):
                     break
 
                 if intent == "CHECKOUT":
-                    print(f"\t🧺 Checking out the basket: {self.llm_manager.basket}")
+                    print(f"\t🧺 Checking out the basket:\n\n{json.dumps(self.llm_manager.basket, indent=4)}\n")
                     self._speak_response("Checking out your basket. Thank you for shopping with us.")
                     continue
 
                 print(f"\t=== 🤖 Intent: {intent}")
                 self.llm_manager.basket = response.get("basket", self.llm_manager.basket)
-                print(f"\t=== 🤖 Updated basket: {self.llm_manager.basket}")
+                print(f"\t=== 🤖 Updated basket:\n\n{json.dumps(self.llm_manager.basket, indent=4)}\n")
                 self._speak_response("Can I help with anything else?")
                 self._save_state(response)
             except Exception as ex:
@@ -428,22 +427,22 @@ We also save the state of the conversation after each interaction to maintain th
 Finally, we create the `_speak_response` and `_save_state` methods to handle text-to-speech conversion and state saving.
 
 ```python
-    def _speak_response(self, response):
-        def speech_thread():
-            try:
-                engine = pyttsx3.init()
-                engine.say(response)
-                engine.runAndWait()
-            except Exception as e:
-                print(f"❌ Error playing speech: {e}")
+def _speak_response(self, response):
+    def speech_thread():
+        # try:
+        engine = pyttsx3.init()
+        engine.say(response)
+        engine.runAndWait()
+        # except Exception as e:
+        #     print(f"❌ Error playing speech: {e}")
 
-        # Start the audio playback in a separate thread
-        threading.Thread(target=speech_thread, daemon=True).start()
+    # Start the audio playback in a separate thread
+    threading.Thread(target=speech_thread, daemon=True).start()
 
-    # Function to save the current application state
-    def _save_state(self, state):
-        with open("response.json", "w") as f:
-            json.dump(state, f, indent=4)
+# Function to save the current application state
+def _save_state(self, state):
+    with open("response.json", "w") as f:
+        json.dump(state, f, indent=4)
 ```
 
 In the `_speak_response` method, we use the `pyttsx3` library to convert text to speech to play the audio response to the user.
@@ -455,21 +454,22 @@ These helper methods are used by the `start` method, which is our entry point to
 ```python
 def start(self):
 
-        # Start continuous listening
-        self._continuous_listen()
+    # Start continuous listening
+    self._continuous_listen()
 
-        # Start processing speech events in a separate thread
-        processor_thread = threading.Thread(target=self._process_speech, daemon=True)
-        processor_thread.start()
+    # Start processing speech events in a separate thread
+    processor_thread = threading.Thread(target=self._process_speech, daemon=True)
+    processor_thread.start()
 
-        try:
-            while not self.stop_listening:
-                time.sleep(1)  # Keep the main thread alive
-        except KeyboardInterrupt:
-            print("\n🔄 Shutting down...")
-            self.stop_listening = True  # Signal threads to stop
-            processor_thread.join()  # Wait for processor thread to finish
-            print("✅ Application exited cleanly.")
+    try:
+        while not self.stop_listening:
+            time.sleep(1)  # Keep the main thread alive
+    except KeyboardInterrupt:
+        print("\n🔄 Shutting down...")
+        self.stop_listening = True  # Signal threads to stop
+        processor_thread.join()  # Wait for processor thread to finish
+        print("✅ Application exited cleanly.")
+
 ```
 
 In the `start` method, we start the continuous listening loop and the speech processing loop in separate threads. We then wait for the user to exit the application or press `Ctrl+C` to stop the application.
