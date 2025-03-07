@@ -26,7 +26,6 @@
 This code repository was tested on the following computers:
 
 - Windows 10
-- MacBook Pro M1
 
 At the time of creation, this code was built using `Python 3.9.13`
 
