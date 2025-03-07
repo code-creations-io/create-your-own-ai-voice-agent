@@ -9,7 +9,7 @@ if __name__ == "__main__":
     speech_queue = Queue()
     llm_manager = LlmManager()
     conversation_manager = ConversationManager(
-        queue=speech_queue, 
+        queue=speech_queue,
         llm_manager=llm_manager
     )
 

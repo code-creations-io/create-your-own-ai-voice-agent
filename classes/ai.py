@@ -52,8 +52,8 @@ class LlmManager:
 
         # Global variables
         self.basket = {}
+        self.stop_listening = False
 
-    # Function to process user input with OpenAI LLM
     def process_user_input(self, input_text, basket):
         prompt = f"""
 ## CONTEXT:
@@ -81,7 +81,7 @@ You must process the user's query and update the basket based on the query. You 
 - When identifying items, you MUST match them to one of these values: {self.PRODUCTS}, if relevant
 - Do NOT match items to a product name if the user is not referring to a relevant product
 - You must handle synonyms for the product names. Use this lookup: {self.SYNONYMS} to help with this
-"""      
+"""
         messages = [
             {"role": "system", "content": prompt},
             {

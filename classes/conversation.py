@@ -13,8 +13,7 @@ class ConversationManager:
         self.energy_threshold = 5000
         self.speech_queue = queue
         self.llm_manager = llm_manager
-
-    # Function to start the conversation manager
+    
     def start(self):
 
         # Start continuous listening
@@ -33,7 +32,6 @@ class ConversationManager:
             processor_thread.join()  # Wait for processor thread to finish
             print("✅ Application exited cleanly.")
 
-    # Function to continuously listen for speech in the background
     def _continuous_listen(self):
         recognizer = sr.Recognizer()
         mic = sr.Microphone()
@@ -64,7 +62,6 @@ class ConversationManager:
         # Start the listening loop in a background thread
         threading.Thread(target=listen_loop, daemon=True).start()
 
-    # Function to process the speech events
     def _process_speech(self):
         while not self.stop_listening:
             try:
@@ -130,16 +127,15 @@ class ConversationManager:
             except Exception as ex:
                 if not self.speech_queue.empty():
                     print(f"\t~~~⚠️ Error while processing speech: {ex}")
-
-    # Function to provide text-to-speech feedback
+    
     def _speak_response(self, response):
         def speech_thread():
-            # try:
-            engine = pyttsx3.init()
-            engine.say(response)
-            engine.runAndWait()
-            # except Exception as e:
-            #     print(f"❌ Error playing speech: {e}")
+            try:
+                engine = pyttsx3.init()
+                engine.say(response)
+                engine.runAndWait()
+            except Exception as e:
+                print(f"❌ Error playing speech: {e}")
 
         # Start the audio playback in a separate thread
         threading.Thread(target=speech_thread, daemon=True).start()
