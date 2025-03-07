@@ -62,7 +62,7 @@ class ConversationManager:
                         continue
 
         # Start the listening loop in a background thread
-        threading.Thread(target=_listen_loop, daemon=True).start()
+        threading.Thread(target=listen_loop, daemon=True).start()
 
     # Function to process the speech events
     def _process_speech(self):
@@ -118,13 +118,13 @@ class ConversationManager:
                     break
 
                 if intent == "CHECKOUT":
-                    print(f"\t🧺 Checking out the basket: {self.llm_manager.basket}")
+                    print(f"\t🧺 Checking out the basket:\n\n{json.dumps(self.llm_manager.basket, indent=4)}\n")
                     self._speak_response("Checking out your basket. Thank you for shopping with us.")
                     continue
 
                 print(f"\t=== 🤖 Intent: {intent}")
                 self.llm_manager.basket = response.get("basket", self.llm_manager.basket)
-                print(f"\t=== 🤖 Updated basket: {self.llm_manager.basket}")
+                print(f"\t=== 🤖 Updated basket:\n\n{json.dumps(self.llm_manager.basket, indent=4)}\n")
                 self._speak_response("Can I help with anything else?")
                 self._save_state(response)
             except Exception as ex:
@@ -134,12 +134,12 @@ class ConversationManager:
     # Function to provide text-to-speech feedback
     def _speak_response(self, response):
         def speech_thread():
-            try:
-                engine = pyttsx3.init()
-                engine.say(response)
-                engine.runAndWait()
-            except Exception as e:
-                print(f"❌ Error playing speech: {e}")
+            # try:
+            engine = pyttsx3.init()
+            engine.say(response)
+            engine.runAndWait()
+            # except Exception as e:
+            #     print(f"❌ Error playing speech: {e}")
 
         # Start the audio playback in a separate thread
         threading.Thread(target=speech_thread, daemon=True).start()
